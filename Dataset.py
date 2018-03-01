@@ -30,6 +30,7 @@ class Dataset:
             for car_tmp in self.cars:
                 if car_tmp.get_to(ride) < car.get_distance(ride):
                     list_ride.remove(ride)
+                    break
         if len(list_ride) == 0:
             car.active = False
             return 0
