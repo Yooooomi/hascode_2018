@@ -22,6 +22,7 @@ class Dataset:
 
     def get_a_ride(self, car, cycle):
         list_ride = []
+        best_time = 0
         for ride in self.rides:
             if ride.available and ride.is_possible(cycle + car.get_to(ride)):
                 list_ride.append(ride)
@@ -29,9 +30,19 @@ class Dataset:
             car.active = False
             return 0
         best_ride = list_ride[0]
+        wait = best_ride.earliest - cycle - car.get_distance(best_ride)
+        if (wait < 0):
+            wait = 0
+        time = car.get_distance(best_ride) + wait
+        best_time = time
         for ride in list_ride:
-            if car.get_distance(ride) < car.get_distance(best_ride):
+            wait = ride.earliest - cycle - car.get_distance(ride)
+            if (wait < 0):
+                wait = 0
+            time = car.get_distance(ride) + wait
+            if time < best_time:
                 best_ride = ride
+                best_time = time
         return best_ride
 
 
