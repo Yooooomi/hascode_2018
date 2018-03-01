@@ -26,6 +26,10 @@ class Dataset:
         for ride in self.rides:
             if ride.available and ride.is_possible(cycle + car.get_to(ride)):
                 list_ride.append(ride)
+        for ride in list_ride:
+            for car_tmp in self.cars:
+                if car_tmp.get_to(ride) < car.get_distance(ride):
+                    list_ride.remove(ride)
         if len(list_ride) == 0:
             car.active = False
             return 0

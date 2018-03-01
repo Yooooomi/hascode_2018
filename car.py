@@ -20,3 +20,6 @@ class Car:
             return to_end + end_to_start
         else:
             return self.get_distance(ride)
+
+    def compute_time_to_this_ride(self, ride):
+        return self.get_to(ride)
