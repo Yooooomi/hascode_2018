@@ -13,6 +13,6 @@ class car:
         return calc_dist(ride.start, self.pos)
 
     def get_to(self, ride):
-        to_end = get_distance(self.pos, self.current_ride.end)
+        to_end = calc_dist(self.pos, self.current_ride.end)
         end_to_start = calc_dist(self.current_ride.end, ride.start)
         return to_end + end_to_start
