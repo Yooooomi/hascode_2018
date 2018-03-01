@@ -1,4 +1,4 @@
-from Vec import Vec
+from vec import Vec
 
 
 class Ride:
@@ -6,5 +6,6 @@ class Ride:
 		array = line.split(' ')
 		self.start = Vec(int(array[0]), int(array[1]))
 		self.end = Vec(int(array[2]), int(array[3]))
-		self.earliest = Vec(int(array[4]), int(array[5]))
+		self.earliest = int(array[4])
+		self.latest = int(array[5])
 		self.available = True
