@@ -12,17 +12,20 @@ class Dataset:
         self.nb_cars = int(first_line[2])
         self.nb_steps = int(first_line[5])
         for line in range(1, len(lines)):
-            self.rides.append(Ride(lines[line]))
+            self.rides.append(Ride(lines[line], line - 1))
 
 
 def print_car_rides(rides):
-    
+    str = ""
+    for ride in rides:
+        str += ride.id + ", "
+    print("this vehicle is assigned ", len(ride), ("rides : [" if len(rides) > 1 else "ride : ["), str[:2], "]")
 
 ds = Dataset()
 
 if __name__ == "__main__":
     for cycle in range(0, ds.nb_steps):
-        for car in self.cars:
+        for car in ds.cars:
             if car.in_ride:
 
                 x = car.pos.x - car.current_ride.end.x
@@ -41,5 +44,5 @@ if __name__ == "__main__":
                 if car.pos.x == car.current_ride.end.x and car.pos.y == car.current_ride.end.y:
                     car.in_ride = False
                     car.current_ride = get_a_ride(car, cycle)
-    for car in cars:
+    for car in ds.cars:
         print_car_rides(car.rides)
