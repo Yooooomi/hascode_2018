@@ -1,5 +1,7 @@
 from car import *
 from vec import *
+import sys
+from Ride import *
 
 class Dataset:
 
@@ -13,12 +15,13 @@ class Dataset:
         first_line = lines[0].split()
         self.nb_cars = int(first_line[2])
         self.nb_steps = int(first_line[5])
+        for i in range(0, self.nb_cars):
+            self.cars.append(Car())
         for line in range(1, len(lines)):
-            self.rides.append(Ride(lines[line]))
+            self.rides.append(Ride(lines[line], line - 1))
 
     def get_a_ride(self, car, cycle):
         list_ride = []
-        best_ride = 0
         for ride in self.rides:
             if ride.available and ride.is_possible(cycle + car.get_to(ride)):
                 list_ride.append(ride)
@@ -33,14 +36,18 @@ class Dataset:
 
 
 def print_car_rides(rides):
-    
+    string = ""
+    for ride in rides:
+        string += str(ride.id)
+        string += " "
+    print(len(rides), string[:-1])
 
-ds = Dataset()
 
 if __name__ == "__main__":
+    ds = Dataset(sys.argv[1])
     for cycle in range(0, ds.nb_steps):
         for car in ds.cars:
-            if car.active and car.in_ride:
+            if car.in_ride:
                 x = car.pos.x - car.current_ride.end.x
                 y = car.pos.y - car.current_ride.end.y
                 if x != 0:
@@ -53,12 +60,13 @@ if __name__ == "__main__":
                         car.pos.y -= 1
                     else:
                         car.pos.y += 1
-                if car.active and car.pos.x == car.current_ride.end.x and car.pos.y == car.current_ride.end.y:
-                    car.in_ride = False
-                    ride = ds.get_a_ride(car, cycle)
-                    if ride != 0:
-                        ride.available = False
-                        car.current_ride = ride
-                        car.in_ride = True
+            if car.active and ((not car.in_ride) or (car.pos.x == car.current_ride.end.x and car.pos.y == car.current_ride.end.y)):
+                car.in_ride = False
+                ride = ds.get_a_ride(car, cycle)
+                if ride != 0:
+                    ride.available = False
+                    car.current_ride = ride
+                    car.in_ride = True
+                    car.rides.append(ride)
     for car in ds.cars:
-        print_car_rides(car.rides)  
+        print_car_rides(car.rides)

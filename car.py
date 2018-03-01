@@ -2,7 +2,7 @@
 
 from vec import *
 
-class car:
+class Car:
     def __init__(self):
         self.pos = Vec(0, 0)
         self.in_ride = False
@@ -14,6 +14,9 @@ class car:
         return calc_dist(ride.start, self.pos)
 
     def get_to(self, ride):
-        to_end = calc_dist(self.pos, self.current_ride.end)
-        end_to_start = calc_dist(self.current_ride.end, ride.start)
-        return to_end + end_to_start
+        if self.in_ride:
+            to_end = calc_dist(self.pos, self.current_ride.end)
+            end_to_start = calc_dist(self.current_ride.end, ride.start)
+            return to_end + end_to_start
+        else:
+            return self.get_distance(ride)
