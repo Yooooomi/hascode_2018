@@ -22,13 +22,12 @@ class Dataset:
 
     def get_a_ride(self, car, cycle):
         list_ride = []
-        best_time = 0
         for ride in self.rides:
             if ride.available and ride.is_possible(cycle + car.get_to(ride)):
                 list_ride.append(ride)
         for ride in list_ride:
             for car_tmp in self.cars:
-                if car_tmp.get_to(ride) < car.get_distance(ride):
+                if car_tmp.compute_time_to_this_ride(ride, cycle) < car.compute_time_to_this_ride(ride, cycle):
                     list_ride.remove(ride)
                     break
         if len(list_ride) == 0:

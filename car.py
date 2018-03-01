@@ -21,5 +21,10 @@ class Car:
         else:
             return self.get_distance(ride)
 
-    def compute_time_to_this_ride(self, ride):
-        return self.get_to(ride)
+    def compute_time_to_this_ride(self, ride, cycle):
+        dist = self.get_to(ride)
+        wait = ride.earliest - cycle - dist
+        if wait < 0:
+            wait = 0
+        dist += wait
+        return dist
