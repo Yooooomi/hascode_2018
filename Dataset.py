@@ -5,9 +5,9 @@ class Dataset:
 
     def __init__(self, path):
         self.nb_cars = 0
+        self.nb_steps = 0
         self.cars = []
         self.rides = []
-        self.nb_steps = 0
         file = open(path)
         lines = file.readlines()
         first_line = lines[0].split()
@@ -28,4 +28,34 @@ class Dataset:
         for ride in list_ride:
             if car.get_distance(ride) < car.get_distance(best_ride):
                 best_ride = ride
-        return ride
+        return best_ride
+
+
+def print_car_rides(rides):
+    
+
+ds = Dataset()
+
+if __name__ == "__main__":
+    for cycle in range(0, ds.nb_steps):
+        for car in self.cars:
+            if car.in_ride:
+
+                x = car.pos.x - car.current_ride.end.x
+                y = car.pos.y - car.current_ride.end.y
+
+                if x != 0:
+                    if x > 0:
+                        car.pos.x -= 1
+                    else:
+                        car.pos.x += 1
+                else:
+                    if y > 0:
+                        car.pos.y -= 1
+                    else:
+                        car.pos.y += 1
+                if car.pos.x == car.current_ride.end.x and car.pos.y == car.current_ride.end.y:
+                    car.in_ride = False
+                    car.current_ride = get_a_ride(car, cycle)
+    for car in cars:
+        print_car_rides(car.rides)
