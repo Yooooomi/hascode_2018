@@ -61,4 +61,4 @@ if __name__ == "__main__":
                         car.current_ride = ride
                         car.in_ride = True
     for car in ds.cars:
-        print_car_rides(car.rides)
+        print_car_rides(car.rides)  
