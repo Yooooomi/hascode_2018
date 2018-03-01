@@ -25,11 +25,6 @@ class Dataset:
         for ride in self.rides:
             if ride.available and ride.is_possible(cycle + car.get_to(ride)):
                 list_ride.append(ride)
-        for ride in list_ride:
-            for car_tmp in self.cars:
-                if car_tmp.compute_time_to_this_ride(ride, cycle) < car.compute_time_to_this_ride(ride, cycle):
-                    list_ride.remove(ride)
-                    break
         if len(list_ride) == 0:
             car.active = False
             return 0
