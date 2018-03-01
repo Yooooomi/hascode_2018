@@ -58,7 +58,7 @@ if __name__ == "__main__":
     ds = Dataset(sys.argv[1])
     for cycle in range(0, ds.nb_steps):
         for car in ds.cars:
-            if car.in_ride:
+            if car.in_ride and cycle >= car.current_ride.earliest:
                 x = car.pos.x - car.current_ride.end.x
                 y = car.pos.y - car.current_ride.end.y
                 if x != 0:
